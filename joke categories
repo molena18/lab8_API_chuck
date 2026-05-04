@@ -1,0 +1,43 @@
+import requests
+def main():
+    categories = [
+        "animal", "career", "celebrity", "dev", "explicit", "fashion",
+        "food", "history", "money", "movie", "music", "political",
+        "religion", "science", "sport", "travel"
+    ]
+
+    print("--- Програма отримання жартів за категоріями ---")
+    print("Доступні категорії:", ", ".join(categories))
+
+    # 2. Приймаємо категорію з клавіатури
+    user_category = input("\nВведіть категорію зі списку: ").strip().lower()
+
+    # Валідація вводу: перевіряємо, чи є введена категорія у списку
+    if user_category not in categories:
+        print(f"Помилка: Категорія '{user_category}' відсутня у списку.")
+        return
+
+    # 3. Формуємо динамічний URL для API-запиту
+    # Змінна user_category робить запит персоналізованим
+    url = f"https://api.chucknorris.io/jokes/random?category={user_category}"
+
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+
+        # 4. Парсуємо отриманий JSON-файл в об'єкт Python (словник)
+        data = response.json()
+
+        # 5. Виводимо потрібні елементи з об'єкта в консоль
+        print("\n" + "=" * 50)
+        print(f"Категорія:      {data['categories'][0].capitalize()}")
+        print(f"Дата створення: {data['created_at']}")
+        print(f"Жарт:           {data['value']}")
+        print("=" * 50)
+
+    except requests.exceptions.RequestException as e:
+        # Обробка можливих помилок при роботі з АРІ
+        print(f"Помилка при виконанні запиту: {e}")
+
+if __name__ == "__main__":
+    main()
