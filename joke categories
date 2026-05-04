@@ -6,8 +6,7 @@ def main():
         "religion", "science", "sport", "travel"
     ]
 
-    print("--- Програма отримання жартів за категоріями ---")
-    print("Доступні категорії:", ", ".join(categories))
+    print("Доступні категорії жартів:", ", ".join(categories))
 
     # 2. Приймаємо категорію з клавіатури
     user_category = input("\nВведіть категорію зі списку: ").strip().lower()
@@ -18,7 +17,6 @@ def main():
         return
 
     # 3. Формуємо динамічний URL для API-запиту
-    # Змінна user_category робить запит персоналізованим
     url = f"https://api.chucknorris.io/jokes/random?category={user_category}"
 
     try:
@@ -30,7 +28,7 @@ def main():
 
         # 5. Виводимо потрібні елементи з об'єкта в консоль
         print("\n" + "=" * 50)
-        print(f"Категорія:      {data['categories'][0].capitalize()}")
+        print(f"Категорія:      {data['categories'][0]}")
         print(f"Дата створення: {data['created_at']}")
         print(f"Жарт:           {data['value']}")
         print("=" * 50)
